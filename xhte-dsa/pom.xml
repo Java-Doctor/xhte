@@ -9,6 +9,8 @@
     <description>xhte-dsa</description>
     <properties>
         <spring-boot.version>2.5.15</spring-boot.version>
+        <lombok.version>1.18.30</lombok.version>
+        <hutool.version>5.8.26</hutool.version>
     </properties>
 
     <dependencyManagement>
@@ -34,6 +36,25 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>
