@@ -134,6 +134,25 @@ public class SingleLinkedList {
         }
     }
 
+    /**
+     * 获取列表的有效节点个数
+     */
+    public int count() {
+        int count = 0;
+        Node curNode = headNode;
+        while (true) {
+            if (ObjectUtil.isEmpty(curNode.next)) {
+                // 如果指针指向的节点下一个节点是空的，那么结束
+                break;
+            } else {
+                // 如果指针指向的下一个节点的地址不为空 那么指针往后移
+                count++;
+                curNode = curNode.next;
+            }
+        }
+        return count;
+    }
+
     public static void main(String[] args) {
         SingleLinkedList singleLinkedList = new SingleLinkedList();
         Node node1 = new Node(1, "胡桐", 25);
@@ -143,12 +162,23 @@ public class SingleLinkedList {
         Node node5 = new Node(5, "未知", 22);
         Node node6 = new Node(1, "小胡", 18);
         System.out.println("====================> 初始数据");
+
+        // 默认添加数据到结尾
+        // singleLinkedList.add(node1);
+        // singleLinkedList.add(node2);
+        // singleLinkedList.add(node3);
+        // singleLinkedList.add(node4);
+
+        // 按序添加数据
         singleLinkedList.add(node1);
         singleLinkedList.add(node2);
         singleLinkedList.add(node3);
         singleLinkedList.add(node4);
+
         singleLinkedList.list();
+
         System.out.println("====================> 删除后的数据");
+
         singleLinkedList.remove(node3);
         singleLinkedList.remove(node4);
         singleLinkedList.remove(node2);
