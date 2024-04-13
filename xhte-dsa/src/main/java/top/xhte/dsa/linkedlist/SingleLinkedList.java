@@ -170,10 +170,10 @@ public class SingleLinkedList {
         // singleLinkedList.add(node4);
 
         // 按序添加数据
-        singleLinkedList.add(node1);
-        singleLinkedList.add(node2);
-        singleLinkedList.add(node3);
-        singleLinkedList.add(node4);
+        singleLinkedList.addIntroduction(node1);
+        singleLinkedList.addIntroduction(node4);
+        singleLinkedList.addIntroduction(node2);
+        singleLinkedList.addIntroduction(node3);
 
         singleLinkedList.list();
 

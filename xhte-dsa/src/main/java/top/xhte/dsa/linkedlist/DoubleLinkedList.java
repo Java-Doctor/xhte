@@ -57,6 +57,8 @@ public class DoubleLinkedList {
                     // 当前节点的下一个节点设置成要新增的节点
                     node.next = curNode.next;
                     node.pre = curNode;
+                    curNode.next = node;
+                    curNode.next.pre = node;
                     break;
                 } else if (curNode.next.no == node.no) {
                     // 如果编号相同 那么不允许重复添加
@@ -144,29 +146,39 @@ public class DoubleLinkedList {
     }
 
     public static void main(String[] args) {
-        DoubleLinkedList singleLinkedList = new DoubleLinkedList();
-        Node node1 = new Node(1, "胡桐", 25);
-        Node node2 = new Node(2, "小王", 18);
-        Node node3 = new Node(3, "小王", 18);
-        Node node4 = new Node(4, "迪迪", 30);
-        Node node5 = new Node(5, "未知", 22);
-        Node node6 = new Node(1, "小胡", 18);
+        DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
+        DoubleLinkedList.Node node1 = new DoubleLinkedList.Node(1, "胡桐", 25);
+        DoubleLinkedList.Node node2 = new DoubleLinkedList.Node(2, "小王", 18);
+        DoubleLinkedList.Node node3 = new DoubleLinkedList.Node(3, "小王", 18);
+        DoubleLinkedList.Node node4 = new DoubleLinkedList.Node(4, "迪迪", 30);
+        DoubleLinkedList.Node node5 = new DoubleLinkedList.Node(5, "未知", 22);
+        DoubleLinkedList.Node node6 = new DoubleLinkedList.Node(1, "小胡", 18);
         System.out.println("====================> 初始数据");
-        singleLinkedList.add(node1);
-        singleLinkedList.add(node2);
-        singleLinkedList.add(node3);
-        singleLinkedList.add(node4);
-        singleLinkedList.list();
-        System.out.println("====================> 修改后的数据");
-        singleLinkedList.update(node6);
-        singleLinkedList.list();
+
+        // 默认添加数据到结尾
+        // doubleLinkedList.add(node1);
+        // doubleLinkedList.add(node2);
+        // doubleLinkedList.add(node3);
+        // doubleLinkedList.add(node4);
+
+        // 按序添加数据
+        doubleLinkedList.addIntroduction(node1);
+        doubleLinkedList.addIntroduction(node4);
+        doubleLinkedList.addIntroduction(node2);
+        doubleLinkedList.addIntroduction(node3);
+
+        doubleLinkedList.list();
+
         System.out.println("====================> 删除后的数据");
-        singleLinkedList.remove(node3);
-        singleLinkedList.remove(node1);
-        singleLinkedList.remove(node4);
-        singleLinkedList.remove(node2);
-        singleLinkedList.remove(node5);
-        singleLinkedList.list();
+
+        doubleLinkedList.remove(node3);
+        doubleLinkedList.remove(node4);
+        doubleLinkedList.remove(node2);
+        doubleLinkedList.remove(node5);
+        doubleLinkedList.list();
+        System.out.println("====================> 修改后的数据");
+        doubleLinkedList.update(node6);
+        doubleLinkedList.list();
 
 
     }
