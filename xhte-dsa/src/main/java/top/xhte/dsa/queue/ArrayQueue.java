@@ -5,7 +5,7 @@ import cn.hutool.json.JSONUtil;
 import java.util.Scanner;
 
 /**
- * 一个环形数组模拟的队列，环形就是相当于数组的首尾相连接，能够无限添加和获取数据
+ * 数组模拟队列
  *
  * @author XHTE
  * @create 2024/4/10
