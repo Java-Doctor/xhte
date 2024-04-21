@@ -105,7 +105,7 @@ public class SingleLinkedList {
                 break;
             } else {
                 if (curNode.next.no == node.no) {
-                // 如果指针指向的下一个节点的地址不为空 那么删除下一个节点
+                    // 如果指针指向的下一个节点的地址不为空 那么删除下一个节点
                     curNode.next.name = node.name;
                     curNode.next.age = node.age;
                     break;
