@@ -3,7 +3,9 @@ package top.xhte.dsa.linkedlist;
 /**
  * 约瑟夫问题
  * 使用单向链表解决
- * 一个圆圈周围有 n 个小屁孩，并且围绕圆圈每隔 m 个小屁孩进行一次处决，直到没有小屁孩在 n 次迭代中幸存下来
+ * 设编号为1、2、……n 的 n 个人围坐一圈，约定编号为 k(1<=k<=n) 的人从 1 开始报数
+ * 数到 m 的那个人出列，它的下一位又从 1 开始报数，数到 m 的那个人又出列，依次类推
+ * 直到所有人出列为止，由此产生一个出队编号的序列
  *
  * @author XHTE
  * @create 2024-04-19
@@ -11,12 +13,18 @@ package top.xhte.dsa.linkedlist;
 public class JosephRingLinkedList {
 
     /**
-     * 初始化第一个节点
+     * 初始化第一个节点 不是头节点
      */
     private Node firstNode;
 
     /**
+     * 环内人数
+     */
+    private int count;
+
+    /**
      * 初始化约瑟夫环
+     *
      * @param personNum 人数
      */
     public void initJosephRing(int personNum) {
@@ -24,20 +32,26 @@ public class JosephRingLinkedList {
             System.out.println("人数必须大于 1！");
             return;
         }
+        // 当前节点为 null
         Node curNode = null;
         for (int i = 1; i < personNum + 1; i++) {
             Node node = new Node(i);
             if (i == 1) {
+                // 如果是第一个，当前节点设置为第一个节点
                 firstNode = node;
                 firstNode.next = firstNode;
                 curNode = firstNode;
             } else if (i == personNum) {
+                // 如果是最后一个，最后一个节点指向第一个节点
                 curNode.next = node;
                 node.next = firstNode;
             } else {
+                // 其他情况就是当前节点的下一个节点指向循环中的节点
                 curNode.next = node;
+                // 然后当前节点指向循环中的节点
                 curNode = node;
             }
+            count++;
         }
     }
 
@@ -48,53 +62,73 @@ public class JosephRingLinkedList {
         if (firstNode == null) {
             System.out.println("约瑟夫环为空！");
         }
+        // 设置当前节点等于第一个节点
         Node curNode = firstNode;
+        // 如果当前节点的下一个节点是第一个节点
+        // 说明环中只有一个节点
+        // 那么直接打印当前节点即可
         if (curNode.next == curNode) {
             System.out.println(curNode);
             return;
         }
-        while (true) {
+        do {
+            // 除了第一个节点后的节点
+            // 先打印，然后节点往后移动
             System.out.println(curNode);
             curNode = curNode.next;
-            if (curNode == firstNode) {
-                break;
-            }
-        }
+            // 当节点移动到第一个节点的时候结束循环
+        } while (curNode != firstNode);
     }
 
     /**
-     * 对每次间隔的人进行枪决
+     * 人员按照传入参数出列
+     *
+     * @param personNo    人员编号
+     * @param intervalNum 报数间隔数
      */
-    public void executionByGunshot(int personNo, int intervalNum) {
+    public void personExitQueue(int personNo, int intervalNum) {
         if (intervalNum < 1) {
-            System.out.println("约瑟夫环枪决间隔人数不能少于 1！");
+            System.out.println("约瑟夫环报数间隔人数不能少于 1！");
+            return;
+        }
+        if (personNo > count || personNo < 1) {
+            System.out.println("约瑟夫环开始人员编号不能小于 1 且不能大于 总人数！");
             return;
         }
         if (firstNode == null) {
             System.out.println("请先生成约瑟夫环！");
             return;
         }
+        // 假设头节点是第一个节点
         Node headNode = firstNode;
+        // 假设当前节点为 null
         Node curNode = null;
-        while(headNode.next.no != personNo) {
-            // 先找到开始的前一个小屁孩的编号
+
+        // 头节点是会一直变动
+        // 如果头节点的下一个节点的编号和开始人员编号相等
+        // 那么就从头节点开始报数，只有第一次进来需要
+        while (headNode.next.no != personNo) {
+            // 先找到开始的前一个人员的编号，目的是方便修改前一个人员的 next
             headNode = headNode.next;
         }
 
         while (true) {
-
+            // 首先当前节点指向头节点
             curNode = headNode;
             if (curNode.next != curNode) {
-                // 找到编号前一个之后 从编号前一个的人开始报数
+                // 如果当前节点的下一个节点不等于当前节点
+                // 找到编号前一个之后，从编号前一个的人开始报数
                 for (int i = 1; i < intervalNum; i++) {
                     curNode = curNode.next;
                 }
-                System.out.println("被枪毙的小屁孩编号为：" + curNode.next.no);
+                System.out.println("报数的人员编号为：" + curNode.next.no);
+                // 头节点变成当前节点
                 headNode = curNode;
+                // 当前节点的下一个节点设置成当前节点的下下个节点
                 curNode.next = curNode.next.next;
-
             } else {
-                System.out.println("被枪毙的小屁孩编号为：" + curNode.no);
+                // 如果当前节点的下一个节点等于当前节点，直接出列并且结束
+                System.out.println("报数的人员编号为：" + curNode.no);
                 break;
             }
 
@@ -102,10 +136,14 @@ public class JosephRingLinkedList {
     }
 
     public static void main(String[] args) {
+        // 创建约瑟夫环链表
         JosephRingLinkedList josephRingLinkedList = new JosephRingLinkedList();
+        // 生成约瑟夫环
         josephRingLinkedList.initJosephRing(100);
+        // 打印约瑟夫环
         josephRingLinkedList.printJosephRing();
-        josephRingLinkedList.executionByGunshot(2, 5);
+        // 开始报数并打印出列人员
+        josephRingLinkedList.personExitQueue(2, 5);
     }
 
     /**
@@ -132,7 +170,7 @@ public class JosephRingLinkedList {
 
         @Override
         public String toString() {
-            return "小屁孩：" + no;
+            return "人员编号：" + no;
         }
     }
 
