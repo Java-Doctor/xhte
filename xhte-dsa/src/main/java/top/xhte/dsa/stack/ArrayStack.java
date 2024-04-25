@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author XHTE
  * @create 2024-04-14 22:10
  */
-public class ArrayStack {
+public class ArrayStack<T> {
 
     /**
      * 栈的最大长度
@@ -18,16 +18,18 @@ public class ArrayStack {
     /**
      * 栈的数组
      */
-    private int[] stack;
+    private T[] stack;
 
     /**
      * 栈顶的位置
      */
     private int top;
 
+    private Integer count = 0;
+
     public ArrayStack(int MAX_SIZE) {
         this.MAX_SIZE = MAX_SIZE;
-        this.stack = new int[MAX_SIZE];
+        this.stack = (T[]) new Object[MAX_SIZE];
         this.top = -1;
     }
 
@@ -51,26 +53,26 @@ public class ArrayStack {
      * 入栈方法
      * @param item 入栈元素
      */
-    public void push(int item) {
+    public void push(T item) {
         if (isFull()) {
             System.out.println("栈内存已满！");
             return;
         }
         stack[++top] = item;
-        list();
+        count++;
     }
 
     /**
      * 出栈方法
      * @return 出栈元素
      */
-    public int pop() {
+    public T pop() {
         if (isEmpty()) {
             System.out.println("栈中无数据！");
-            return -1;
+            return null;
         }
-        int item = stack[top--];
-        list();
+        T item = stack[top--];
+        count--;
         return item;
     }
 
@@ -82,6 +84,13 @@ public class ArrayStack {
             System.out.println("栈中无数据！");
         }
         System.out.println("栈内元素为：" + Arrays.toString(stack));
+    }
+
+    /**
+     * 获取栈的个数
+     */
+    public Integer count() {
+       return count;
     }
 
     public static void main(String[] args) {
