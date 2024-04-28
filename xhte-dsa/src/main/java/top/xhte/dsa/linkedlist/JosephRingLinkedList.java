@@ -92,7 +92,7 @@ public class JosephRingLinkedList {
             return;
         }
         if (personNo > count || personNo < 1) {
-            System.out.println("约瑟夫环开始人员编号不能小于 1 且不能大于 总人数！");
+            System.out.println("约瑟夫环开始人员编号不能小于 1 且不能大于总人数！");
             return;
         }
         if (firstNode == null) {
@@ -139,11 +139,11 @@ public class JosephRingLinkedList {
         // 创建约瑟夫环链表
         JosephRingLinkedList josephRingLinkedList = new JosephRingLinkedList();
         // 生成约瑟夫环
-        josephRingLinkedList.initJosephRing(100);
+        josephRingLinkedList.initJosephRing(1);
         // 打印约瑟夫环
         josephRingLinkedList.printJosephRing();
         // 开始报数并打印出列人员
-        josephRingLinkedList.personExitQueue(2, 5);
+        josephRingLinkedList.personExitQueue(1, 5);
     }
 
     /**

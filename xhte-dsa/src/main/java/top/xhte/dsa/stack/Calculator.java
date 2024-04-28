@@ -39,7 +39,7 @@ public class Calculator {
         String s = "[" + 1 + "," + 2 + "]";
         numList = new ArrayList<>(CollUtil.newArrayList(numArray));
         // 创建运算符集合
-        Character[] operatorArray = {'+', '-', '*', '/'};
+        Character[] operatorArray = {'+', '-', '*', '/', '(', ')'};
         operatorList = new ArrayList<>(CollUtil.newArrayList(operatorArray));
     }
 
@@ -47,14 +47,13 @@ public class Calculator {
         if (ObjectUtil.isEmpty(formula)) {
             throw new RuntimeException("算式不能为空！");
         }
-
         String temp = "";
         for (int i = 0; i < formula.toCharArray().length; i++) {
             char c = formula.toCharArray()[i];
             if (numList.contains(c)) {
                 // 数字
                 temp += c;
-                if (i == (formula.toCharArray().length -1)) {
+                if (i == (formula.toCharArray().length - 1)) {
                     numStack.push(Integer.valueOf(temp));
                 }
             } else if (operatorList.contains(c)) {
@@ -63,6 +62,14 @@ public class Calculator {
                     numStack.push(Integer.valueOf(temp));
                 }
                 temp = String.valueOf(c);
+                if (c == '(') {
+                    // while ()
+                }
+
+                temp = String.valueOf(c);
+                if (getPriority(operatorStack.getTop()) > getPriority(temp)) {
+                    operatorCalculations(numStack.pop(), numStack.pop(), operatorStack.pop());
+                }
                 operatorStack.push(temp);
                 temp = "";
             } else {
@@ -74,21 +81,40 @@ public class Calculator {
         operatorStack.list();
         // 开始计算
         while (!numStack.count().equals(1)) {
-            Integer pre = Math.abs(numStack.pop());
-            Integer next = numStack.pop();
-            String operator = operatorStack.pop();
-            if (operator.equals("+")) {
-                numStack.push(pre + next);
-            } else if (operator.equals("-")) {
-                numStack.push(next - pre);
-            }
+            operatorCalculations(numStack.pop(), numStack.pop(), operatorStack.pop());
         }
         return numStack.pop();
     }
 
+    private void operatorCalculations(Integer pre, Integer next, String operator) {
+        if (operator.equals("+")) {
+            numStack.push(pre + next);
+        } else if (operator.equals("-")) {
+            numStack.push(next - pre);
+        } else if (operator.equals("*")) {
+            numStack.push(next * pre);
+        } else {
+            numStack.push(next / pre);
+        }
+    }
+
+    public int getPriority(String operator) {
+        if (operator != null) {
+            switch (operator) {
+                case "+":
+                case "-":
+                    return 1;
+                case "*":
+                case "/":
+                    return 2;
+            }
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         Calculator calculator = new Calculator();
-        Integer compute = calculator.compute("3+4-42+3-2");
+        Integer compute = calculator.compute("3+4*42-3-2");
         System.out.println(compute);
     }
 

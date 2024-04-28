@@ -93,6 +93,16 @@ public class ArrayStack<T> {
        return count;
     }
 
+    /**
+     * 获取栈顶元素
+     */
+    public T getTop() {
+        if (top == -1) {
+            return null;
+        }
+        return stack[top];
+    }
+
     public static void main(String[] args) {
         // 创建栈
         ArrayStack arrayStack = new ArrayStack(3);
